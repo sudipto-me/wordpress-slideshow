@@ -1,0 +1,20 @@
+{
+  "name": "wp/ss",
+  "description": "This will show slideshows on the wordpress frontend.",
+  "type": "wordpress-plugin",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "Sudipto Shakhari",
+      "email": "shakhari.sudipto@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "WP\\SS\\": "includes/"
+    },
+    "files": [ "includes/functions.php" ]
+  }
+}
