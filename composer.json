@@ -13,7 +13,9 @@
   "require": {},
   "autoload": {
     "psr-4": {
-      "WP\\SS\\": "includes/"
+      "WP\\SS\\": "includes/",
+      "WP\\SS\\Admin\\": "includes/admin/",
+      "WP\\SS\\Frontend\\": "includes/frontend/"
     },
     "files": [ "includes/functions.php" ]
   }
