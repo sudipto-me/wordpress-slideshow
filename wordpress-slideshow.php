@@ -115,7 +115,6 @@ final class WordPress_Slideshow {
 	}
 
 	public function add_settings_page() {
-
 		$this->wpsf->add_settings_page(
 			array(
 				'page_slug'    => 'wp-slideshow',
