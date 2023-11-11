@@ -18,6 +18,8 @@ class Plugin {
 		) );
 		add_action( 'wp_ajax_slideshow_image_remove', array( $this, 'slideshow_image_remove' ) );
 		add_action( 'wp_ajax_slideshow_image_rearrange', array( $this, 'slideshow_image_rearrange' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'slideshow_frontend_scripts' ) );
+		add_shortcode( 'myslideshow', array( $this, 'myslideshow_shortcode_callback' ) );
 	}
 
 	/**
@@ -256,6 +258,52 @@ class Plugin {
 		) );
 
 		wp_die();
+	}
+
+	public function slideshow_frontend_scripts() {
+		$vendor_scripts_url = wordpress_slideshow()->plugin_url() . '/assets/vendor';
+		$js_url             = wordpress_slideshow()->plugin_url() . '/assets/js';
+		$css_url             = wordpress_slideshow()->plugin_url() . '/assets/css';
+		wp_enqueue_style( 'swiper-slider-css', $vendor_scripts_url . '/swiper/swiper-bundle.min.css', '', '11.0.4' );
+		wp_enqueue_style( 'wp_slideshow-frontend-styles', $css_url . '/frontend-styles.css', '', '1.0.0' );
+		wp_enqueue_script( 'swiper-slider-js', $vendor_scripts_url . '/swiper/swiper-bundle.min.js', array( 'jquery' ), '11.0.4', array( 'in_footer' => true ) );
+		wp_enqueue_script( 'wp_slideshow-frontend-scripts', $js_url . '/frontend-scripts.js', array(
+			'jquery',
+			'swiper-slider-js'
+		), '1.0.0', array( 'in_footer' => true ) );
+	}
+
+	public function myslideshow_shortcode_callback() {
+		ob_start();
+        ?>
+        <?php
+		echo '<div class="wp_slideshow_wrapper">';
+		echo '<p>' . __( 'My slideshow', '' ) . '</p>';
+		$slideshow_images = get_option( 'slideshow_images', array() );
+		echo '<div class="swiper">';
+		echo '<div class="swiper-wrapper">';
+		/*
+		* <img src="<?php echo esc_url($image_url_large); ?>"
+	 srcset="<?php echo esc_attr("$image_url_thumbnail 150w, $image_url_medium 300w, $image_url_large 1024w"); ?>"
+	 sizes="(max-width: 600px) 100vw, 800px"
+	 alt="Alt text">
+		*/
+		foreach ( $slideshow_images as $slideshow_image ) {
+			$slideshow_image_id            = attachment_url_to_postid( $slideshow_image );
+			$slideshow_image_alt_text      = get_post_meta( $slideshow_image_id, '_wp_attachment_image_alt', true );
+
+			echo '<div class="swiper-slide"><img src="' . esc_url( $slideshow_image ) . '" alt="'. $slideshow_image_alt_text .'"></div>';
+		}
+		echo "</div>";
+		echo '<div class="swiper-pagination"></div>';
+		echo '<div class="swiper-button-prev"></div>';
+		echo '<div class="swiper-button-next"></div>';
+		echo '<div class="swiper-scrollbar"></div>';
+		echo "</div></div>";
+		?>
+		<?php
+
+		return ob_get_clean();
 	}
 }
 

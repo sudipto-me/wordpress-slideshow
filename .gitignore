@@ -3,4 +3,5 @@
 vendor
 vendor/composer
 !vendor/autoload.php
+!assets/vendor
 

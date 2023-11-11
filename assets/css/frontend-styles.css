@@ -1,0 +1,9 @@
+.wp_slideshow_wrapper .swiper-wrapper {
+    width: 100%;
+    margin: auto;
+}
+
+.wp_slideshow_wrapper .swiper-wrapper .swiper-slide img {
+    width: 100%; /* Make images fill the slide container */
+    height: auto; /* Maintain the aspect ratio */
+}
