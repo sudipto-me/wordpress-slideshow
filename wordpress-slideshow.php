@@ -129,6 +129,36 @@ final class WordPress_Slideshow {
 	public function validate_settings( $input ) {
 		return $input;
 	}
+
+	/**
+	 * Plugin URL getter.
+	 *
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function plugin_url() {
+		return untrailingslashit( plugins_url( '/', __FILE__ ) );
+	}
+
+	/**
+	 * Plugin path getter.
+	 *
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function plugin_path() {
+		return untrailingslashit( plugin_dir_path( __FILE__ ) );
+	}
+
+	/**
+	 * Plugin base path name getter.
+	 *
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function plugin_basename() {
+		return plugin_basename( __FILE__ );
+	}
 }
 /**
  * Initializes the main plugin
